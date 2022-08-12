@@ -154,6 +154,24 @@ end
     end,
 	Enabled = false
 })
+Y.Toggle({
+	Text = "Auto Quest",
+	Callback = function(Value)
+        aa = Value
+        while aa do task.wait()
+            if game:GetService("Players").Kuvuxx.PlayerGui.QuestBar.MainFrame.Visible == false then
+                local args = {
+                    [1] = "Quest",
+                    [2] = npcs
+                }
+                game:GetService("ReplicatedStorage").Remotes.NPC:FireServer(unpack(args))
+                task.wait(.5)
+                game:GetService("Players").LocalPlayer.PlayerGui.QuestGui.Frame.Accept.RemoteEvent:FireServer()
+            end
+        end
+    end,
+	Enabled = false
+})
 
 local pl = Y.Dropdown({
 	Text = "Select Player",
@@ -211,6 +229,7 @@ Y.Toggle({
     end,
 	Enabled = false
 })
+
     T.Dropdown({
 	Text = "Select Island",
 	Callback = function(Value)
