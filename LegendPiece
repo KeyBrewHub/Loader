@@ -159,7 +159,7 @@ Y.Toggle({
 	Callback = function(Value)
         aa = Value
         while aa do task.wait()
-            if game:GetService("Players").Kuvuxx.PlayerGui.QuestBar.MainFrame.Visible == false then
+            if lp.PlayerGui.QuestBar.MainFrame.Visible == false then
                 local args = {
                     [1] = "Quest",
                     [2] = npcs
