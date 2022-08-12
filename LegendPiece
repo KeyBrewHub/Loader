@@ -1,0 +1,205 @@
+lp = game.Players.LocalPlayer
+local NPC = {}
+
+    for i, v in pairs(game:GetService("Workspace").Monster:GetChildren()) do
+        if v:IsA "Model"  then
+            if not table.find(NPC, tostring(v)) then
+            table.insert(NPC, tostring(v))
+        end
+    end
+end
+local TP = {}
+
+    for i, v in pairs(game:GetService("Workspace").Island:GetChildren()) do
+        if v:IsA "Part"  then
+            table.insert(TP, tostring(v))
+    end
+end
+local Wep = {}
+
+    for i, v in pairs(lp.Backpack:GetChildren()) do
+        if v:IsA "Tool"  then
+            table.insert(Wep, tostring(v))
+    end
+end
+
+
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local X = Material.Load({
+    Title = "Keybrew Hub discord.gg/keybrew",
+    Style = 2,
+    SizeX = 300,
+    SizeY = 350,
+    Theme = "Light",
+    ColorOverrides = {
+        MainFrame = Color3.fromRGB(0,0,0),
+        Toggle = Color3.fromRGB(124,37,255),
+        ToggleAccent = Color3.fromRGB(255,255,255), 
+        Dropdown = Color3.fromRGB(124,37,255),
+		DropdownAccent = Color3.fromRGB(255,255,255),
+        Slider = Color3.fromRGB(124,37,255),
+		SliderAccent = Color3.fromRGB(255,255,255),
+        NavBarAccent = Color3.fromRGB(0,0,0),
+        Content = Color3.fromRGB(0,0,0),
+    }
+})
+
+local Y = X.New({
+	Title = "Main"
+})
+local T = X.New({
+	Title = "Teleports"
+})
+local S = X.New({
+	Title = "Settings"
+})
+
+Y.Toggle({
+	Text = "Auto Melee (Equip Melee)",
+	Callback = function(Value)
+        n = Value
+                    while n do task.wait()
+            local args = {
+                [1] = 1
+            }
+
+            game:GetService("Players").LocalPlayer.Character.Combat.RemoteEvent:FireServer(unpack(args))
+        end
+    end,
+	Enabled = false
+})
+
+local w = S.Dropdown({
+    Text = "Select Weapon",
+    Callback = function(Value)
+        getgenv().weapon = Value
+    end,
+    Options = Wep
+})
+   local p = Y.Dropdown({
+	Text = "Select NPC",
+	Callback = function(Value)
+		getgenv().npcs = Value
+	end,
+	Options = NPC
+})
+    Y.Button(
+    {
+        Text = "Refresh NPCs",
+        Callback = function()
+            table.clear(NPC)
+            for i, v in pairs(game:GetService("Workspace").Monster:GetChildren()) do
+                if v:IsA "Model"  then
+                    if not table.find(NPC, tostring(v)) then
+                    table.insert(NPC, tostring(v))
+                    p:SetOptions(NPC)
+                    end
+                end
+            end
+        end,
+    }
+)
+local function getClosest()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").Monster:GetChildren() do
+        if v:IsA("Model") and v.Name == npcs then
+            local mag =
+                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+
+    Y.Dropdown({
+	Text = "Farm Type",
+	Callback = function(Value)
+		getgenv().setting = Value
+	end,
+	Options = {
+		"Above",
+		"Below",
+	},
+})
+    Y.Toggle({
+	Text = "Autofarm",
+	Callback = function(Value)
+        a = Value
+        while a do task.wait()
+            pcall(function()
+            if setting == "Below" then
+            lp.Character.HumanoidRootPart.CFrame =   CFrame.new(getClosest().HumanoidRootPart.Position + Vector3.new(0, -7, 0), getClosest().HumanoidRootPart.Position)
+            game:GetService("Players").LocalPlayer.Character[weapon].Punch:FireServer()
+            elseif setting == "Above" then
+                lp.Character.HumanoidRootPart.CFrame =   CFrame.new(getClosest().HumanoidRootPart.Position + Vector3.new(0, 5, 0), getClosest().HumanoidRootPart.Position)
+                game:GetService("Players").LocalPlayer.Character[weapon].Punch:FireServer()
+            end
+            end) 
+        end
+    end,
+	Enabled = false
+})
+     Y.Toggle({
+	Text = "Auto Quest",
+	Callback = function(Value)
+        aa = Value
+        while aa do task.wait()
+            if lp.PlayerGui.QuestBar.MainFrame.Visible == false then
+                local args = {
+                    [1] = "Quest",
+                    [2] = npcs
+                }
+                game:GetService("ReplicatedStorage").Remotes.NPC:FireServer(unpack(args))
+                task.wait(.5)
+                game:GetService("Players").LocalPlayer.PlayerGui.QuestGui.Frame.Accept.RemoteEvent:FireServer()
+            end
+        end
+    end,
+	Enabled = false
+})
+    T.Dropdown({
+	Text = "Select Island",
+	Callback = function(Value)
+		getgenv().island = Value
+	end,
+	Options = TP
+})
+    T.Button({
+	Text = "Teleport to Island",
+	Callback = function()
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Island[island].CFrame
+	end,
+})
+
+
+    S.Button(
+        {
+            Text = "Refresh Weapons",
+            Callback = function()
+                table.clear(Wep)
+                for i, v in pairs(lp.Backpack:GetChildren()) do
+                    if v:IsA "Tool"  then
+                        table.insert(Wep, tostring(v))
+                        w:SetOptions(Wep)
+                    end
+                end
+            end,
+        }
+    )
+    S.Toggle({
+        Text = "Auto Equip",
+        Callback = function(Value)
+            c = Value
+            while c do task.wait()
+                pcall(function()
+                local plr = game:service('Players')
+                plr.LocalPlayer:findFirstChildOfClass('Backpack')[weapon].Parent = plr.LocalPlayer.Character
+                end)
+            end
+        end,
+        Enabled = false
+    })
