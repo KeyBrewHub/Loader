@@ -268,3 +268,29 @@ E.Button({
 	end,
 
 })
+local function getTHUG()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").Living:GetChildren() do
+        if v.Name == "Thug2" or v.Name == "Thug3" or v.Name == "Thug4" then
+            local mag =
+                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+E.Toggle({
+	Text = "Autofarm Thugs",
+	Callback = function(Value)
+        t = Value
+        while t do task.wait()
+            pcall(function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =   CFrame.new(getTHUG().HumanoidRootPart.Position + Vector3.new(0, 7, 0), getTHUG().HumanoidRootPart.Position)
+    end)
+        end
+    end,
+	Enabled = false
+})
