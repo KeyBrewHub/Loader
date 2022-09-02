@@ -33,8 +33,8 @@ local Y = X.New({
 		"Plot3",
 		"Plot4",
 		"Plot5",
-        "Plot6",
-        "Plot7",
+                "Plot6",
+                "Plot7",
 	},
 	Menu = {
 		Information = function(self)
