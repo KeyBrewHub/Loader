@@ -20,7 +20,7 @@ local X = Material.Load({
 })
 
 local Y = X.New({
-	Title = "1"
+	Title = "Main"
 })
     Y.Dropdown({
 	Text = "Select Plot",
@@ -80,7 +80,38 @@ Y.Toggle({
 	end,
 	Enabled = false
 })
-    Y.Button({
+Y.Toggle({
+	Text = "Auto NextNoob",
+	Callback = function(Value)
+        aa = Value
+        while aa do task.wait()
+            pcall(function()
+                for _,v in pairs(game:GetService("Workspace").Plots[id].PurchaseButton:GetChildren()) do
+                    if v:IsA("TouchTransmitter") then
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                    wait()
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+                    wait()
+                end
+                end
+            end)
+        end
+	end,
+	Enabled = false
+})
+
+Y.Toggle({
+	Text = "Auto Upgrade",
+	Callback = function(Value)
+        aa = Value
+        while aa do task.wait()
+            game.ReplicatedStorage.GoldenNoob:FireServer()
+        end
+	end,
+	Enabled = false
+})
+
+Y.Button({
 	Text = "AutoCollect",
 	Callback = function()
         game:GetService("Workspace").Plots[id].AutoCollect.Value = true
