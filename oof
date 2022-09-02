@@ -1,0 +1,88 @@
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local X = Material.Load({
+    Title = "Keybrew Hub discord.gg/keybrew",
+    Style = 2,
+    SizeX = 300,
+    SizeY = 350,
+    Theme = "Light",
+    ColorOverrides = {
+        MainFrame = Color3.fromRGB(0,0,0),
+        Toggle = Color3.fromRGB(124,37,255),
+        ToggleAccent = Color3.fromRGB(255,255,255), 
+        Dropdown = Color3.fromRGB(124,37,255),
+		DropdownAccent = Color3.fromRGB(255,255,255),
+        Slider = Color3.fromRGB(124,37,255),
+		SliderAccent = Color3.fromRGB(255,255,255),
+        NavBarAccent = Color3.fromRGB(0,0,0),
+        Content = Color3.fromRGB(0,0,0),
+    }
+})
+
+local Y = X.New({
+	Title = "1"
+})
+    Y.Dropdown({
+	Text = "Select Plot",
+	Callback = function(Value)
+		getgenv().id = Value
+	end,
+	Options = {
+		"Plot1",
+		"Plot2",
+		"Plot3",
+		"Plot4",
+		"Plot5",
+        "Plot6",
+        "Plot7",
+	},
+	Menu = {
+		Information = function(self)
+			X.Banner({
+				Text = "Based on which order your plot is in."
+			})
+		end
+	}
+})
+    Y.Toggle({
+	Text = "AutoDep",
+	Callback = function(Value)
+        a = Value
+        while a do task.wait()
+                for _,v in pairs(game:GetService("Workspace").Plots[id].DepositStep:GetChildren()) do
+                    if v:IsA("TouchTransmitter") then
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                    wait()
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+                    wait()
+                end
+            end
+        end
+	end,
+	Enabled = false
+})
+Y.Toggle({
+	Text = "AutoPrize",
+	Callback = function(Value)
+        aa = Value
+        while aa do task.wait()
+            pcall(function()
+                for _,v in pairs(game:GetService("Workspace").Plots[id].SuperPrize.TouchPart:GetChildren()) do
+                    if v:IsA("TouchTransmitter") then
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                    wait()
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+                    wait()
+                end
+                end
+            end)
+        end
+	end,
+	Enabled = false
+})
+    Y.Button({
+	Text = "AutoCollect",
+	Callback = function()
+        game:GetService("Workspace").Plots[id].AutoCollect.Value = true
+	end,
+})
