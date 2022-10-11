@@ -1,0 +1,97 @@
+local island = {}
+
+    for i, v in pairs(game:GetService("Workspace")["__WORKSPACE"].Mobs:GetChildren()) do
+        if v:IsA "Folder"  then
+            table.insert(island, tostring(v))
+    end
+end
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local X = Material.Load({
+    Title = "Keybrew Hub discord.gg/keybrew",
+    Style = 2,
+    SizeX = 300,
+    SizeY = 350,
+    Theme = "Light",
+    ColorOverrides = {
+        MainFrame = Color3.fromRGB(0,0,0),
+        Toggle = Color3.fromRGB(124,37,255),
+        ToggleAccent = Color3.fromRGB(255,255,255), 
+        Dropdown = Color3.fromRGB(124,37,255),
+		DropdownAccent = Color3.fromRGB(255,255,255),
+        Slider = Color3.fromRGB(124,37,255),
+		SliderAccent = Color3.fromRGB(255,255,255),
+        NavBarAccent = Color3.fromRGB(0,0,0),
+        Content = Color3.fromRGB(0,0,0),
+    }
+})
+
+local M = X.New({
+	Title = "Main"
+}) 
+        M.Dropdown({
+        Text = "Select World",
+        Callback = function(Value)
+            getgenv().islands = Value
+        end,
+        Options = 
+            island
+    })
+
+    M.Toggle({
+	Text = "Auto Power Train",
+	Callback = function(Value)
+        a = Value
+        while a do task.wait()
+            local args = {
+                [1] = {
+                    [1] = "PowerTrain"
+                }
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Client:FireServer(unpack(args))
+        end
+	end,
+	Enabled = false
+})
+
+local function getClosest()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace")["__WORKSPACE"].Mobs:GetDescendants() do
+        if v:IsA("Model") and v.Parent.Name == islands then
+            local mag =
+                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Torso.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+M.Toggle({
+	Text = "Auto Attack Nearest Mob",
+	Callback = function(Value)
+        aa = Value
+        while aa do task.wait()
+            local args = {
+                [1] = {
+                    [1] = "AttackMob",
+                    [2] = getClosest()
+                }
+            }
+            
+            game:GetService("ReplicatedStorage").Remotes.Client:FireServer(unpack(args))
+        end
+	end,
+	Enabled = false
+})
+M.Toggle({
+	Text = "Magnet",
+	Callback = function(Value)
+        b = Value
+        while b do task.wait()
+        end
+	end,
+	Enabled = false
+})
