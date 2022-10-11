@@ -55,6 +55,21 @@ local M = X.New({
 	Enabled = false
 })
 
+local function getDrop()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace")["__DROPS"]:GetChildren() do
+        if v:IsA("Part") then
+            local mag =
+                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+
 local function getClosest()
     local dist, thing = math.huge
     for i, v in next, game:GetService("Workspace")["__WORKSPACE"].Mobs:GetDescendants() do
@@ -82,15 +97,6 @@ M.Toggle({
             }
             
             game:GetService("ReplicatedStorage").Remotes.Client:FireServer(unpack(args))
-        end
-	end,
-	Enabled = false
-})
-M.Toggle({
-	Text = "Magnet",
-	Callback = function(Value)
-        b = Value
-        while b do task.wait()
         end
 	end,
 	Enabled = false
