@@ -8,7 +8,7 @@ end
 local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
 
 local X = Material.Load({
-    Title = "Keybrew Hub discord.gg/keybrew",
+    Title = "Keybrew Hub https://discord.gg/eFzmVdNj6h",
     Style = 2,
     SizeX = 300,
     SizeY = 350,
