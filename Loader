@@ -22,6 +22,7 @@ end
 local Games = {
     [10723695195] = "Loader/main/evo";
     [5130598377] = "Loader/main/AUT";
+    [9195713767] = "Loader/main/SwordHaven";
 
 
 }
