@@ -34,7 +34,7 @@ local C = X.New({
 	Text = "Auto Attack",
 	Callback = function(Value)
         a = Value
-        while a do task.wait()
+        while a do task.wait(.5)
             game:GetService("ReplicatedStorage").Remote.Combat.Server.RequestAttack:FireServer()
         end
 	end,
