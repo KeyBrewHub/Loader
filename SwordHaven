@@ -1,0 +1,126 @@
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local X = Material.Load({
+    Title = "Keybrew Hub",
+    Style = 2,
+    SizeX = 300,
+    SizeY = 350,
+    Theme = "Light",
+    ColorOverrides = {
+        MainFrame = Color3.fromRGB(0,0,0),
+        Toggle = Color3.fromRGB(124,37,255),
+        ToggleAccent = Color3.fromRGB(255,255,255), 
+        Dropdown = Color3.fromRGB(124,37,255),
+		DropdownAccent = Color3.fromRGB(255,255,255),
+        Slider = Color3.fromRGB(124,37,255),
+		SliderAccent = Color3.fromRGB(255,255,255),
+        NavBarAccent = Color3.fromRGB(0,0,0),
+        Content = Color3.fromRGB(0,0,0),
+    }
+})
+
+local Y = X.New({
+	Title = "Autofarm"
+})
+
+local Z = X.New({
+	Title = "Eggs"
+})
+
+local C = X.New({
+	Title = "Credits"
+})
+    Y.Toggle({
+	Text = "Auto Attack",
+	Callback = function(Value)
+        a = Value
+        while a do task.wait()
+            game:GetService("ReplicatedStorage").Remote.Combat.Server.RequestAttack:FireServer()
+        end
+	end,
+	Enabled = false
+})
+    Z.TextField({
+	Text = "Input Egg Number",
+	Callback = function(Value)
+		getgenv().number = Value
+	end,
+
+})
+    Z.Toggle({
+	Text = "Auto Open",
+	Callback = function(Value)
+        aa = Value
+        while aa do task.wait(1)
+            local args = {
+                [1] = 1,
+                [2] = number
+            }
+            
+            game:GetService("ReplicatedStorage").Remote.Player.Server.OpenChest:InvokeServer(unpack(args))        
+        end
+	end,
+	Enabled = false
+})
+
+    Y.TextField({
+	Text = "Input Mob Name",
+	Callback = function(Value)
+		getgenv().mob = Value
+	end,
+
+})
+local function getClosest()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").Instance.Regular[1].Zones:GetDescendants() do
+        if v:IsA("Model") and v.Parent.Name == "Mobs" and v.Main.HealthUI.EnemyName.Text == mob then
+            local mag =
+                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Main.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+Y.Toggle({
+	Text = "Auto Mob",
+	Callback = function(Value)
+        aaaa = Value
+        while aaaa do task.wait()
+            pcall(function()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Position = getClosest().Main.Position
+            end)
+        end
+	end,
+	Enabled = false
+})
+
+Y.Toggle({
+	Text = "Auto Claim Rewards",
+	Callback = function(Value)
+        aaa = Value
+        while aaa do task.wait()
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((1))    
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((2))     
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((3))     
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((4))     
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((5))     
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((6))     
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((7))     
+            game:GetService("ReplicatedStorage").Remote.Reward.Server.ClaimDailyReward:InvokeServer((8))      
+        end
+	end,
+	Enabled = false
+})
+
+    C.Button({
+	Text = "https://discord.gg/eFzmVdNj6h",
+	Callback = function()
+		if syn then
+            setclipboard("what to copy")
+            end
+	end,
+
+})
