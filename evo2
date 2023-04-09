@@ -287,12 +287,14 @@ Y.Toggle({
     Callback = function(Value)
         a3 = Value
         while a3 do task.wait()
+            pcall(function()
             local args = {
                 [1] = "Eat_Body_Part",
                 [2] = getFOOD()
             }
 
             game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+        end)
         end
     end,
     Enabled = false
