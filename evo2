@@ -1,0 +1,322 @@
+local NPCS = {}
+
+for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
+    if v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Configuration") then
+            if not table.find(NPCS, tostring(v)) then
+            table.insert(NPCS, tostring(v))
+        end
+    end
+end
+local NPC = {}
+
+for i, v in pairs(game:GetService("Workspace").World.Interactables:GetChildren()) do
+    if v:FindFirstChild("HumanoidRootPart") then
+            if not table.find(NPC, tostring(v)) then
+            table.insert(NPC, tostring(v))
+        end
+    end
+end
+local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
+
+local player = game.Players.LocalPlayer
+local char = player.Character
+local lp = game.Players.LocalPlayer
+
+
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local X =
+    Material.Load(
+    {
+        Title = "PM",
+        Style = 2,
+        SizeX = 300,
+        SizeY = 350,
+        Theme = "Light",
+        ColorOverrides = {
+            MainFrame = Color3.fromRGB(0, 0, 0),
+            Toggle = Color3.fromRGB(124, 37, 255),
+            ToggleAccent = Color3.fromRGB(255, 255, 255),
+            Dropdown = Color3.fromRGB(124, 37, 255),
+            DropdownAccent = Color3.fromRGB(255, 255, 255),
+            Slider = Color3.fromRGB(124, 37, 255),
+            SliderAccent = Color3.fromRGB(255, 255, 255),
+            NavBarAccent = Color3.fromRGB(0, 0, 0),
+            Content = Color3.fromRGB(0, 0, 0)
+        }
+    }
+)
+
+local Y =
+    X.New(
+    {
+        Title = "AutoFarm"
+    }
+)
+local M =
+    X.New(
+    {
+        Title = "Misc"
+    }
+)
+local Cred =
+    X.New(
+    {
+        Title = "Credits"
+    }
+)
+Cred.Button(
+    {
+        Text = "Copy Discord",
+        Callback = function()
+            setclipboard("https://discord.gg/s3hYDPjuE3")
+            toclipboard("https://discord.gg/s3hYDPjuE3")
+        end
+    }
+)
+
+M.Dropdown({
+    Text = "Select Slot",
+    Callback = function(Value)
+    getgenv().slot = Value    
+end,
+    Options = { 
+        "Slot_1",
+        "Slot_2",
+        "Slot_3",
+
+    }   
+})
+
+M.Button(
+    {
+        Text = "Meditation Progression",
+        Callback = function()
+            Notification:Notify(
+   {Title = "Meditation Level", Description = "Your Meditation Level is".." ".. game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].MeditationProgression.Level.Value.." "..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].MeditationProgression.Exp.Value.."/"..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].MeditationProgression.MaxExp.Value},
+   {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+   {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
+)
+        end
+    }
+)
+
+M.Button(
+    {
+        Text = "Hollow Progression",
+        Callback = function()
+            Notification:Notify(
+   {Title = "Hollow Evolution", Description = "Your Hollow Evolution is".." ".. game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].HollowProgression.Evolution.Value.." "..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].HollowProgression.Exp.Value.."/"..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].HollowProgression.MaxExp.Value},
+   {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+   {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
+)
+        end
+    }
+)
+
+M.Button(
+    {
+        Text = "Zanpakuto Progression",
+        Callback = function()
+            Notification:Notify(
+   {Title = "Zanpakuto Level", Description = "Your Zanpakuto Level is".." ".. game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].ZanpakutoProgression.Level.Value.." "..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].ZanpakutoProgression.Exp.Value.."/"..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].ZanpakutoProgression.MaxExp.Value},
+   {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
+   {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
+)
+        end
+    }
+)
+
+Y.Toggle({
+    Text = "Auto Meditation",
+    Callback = function(Value)
+        a0 = Value
+        while a0 do task.wait()
+            local args = {
+                [1] = "Meditating",
+                [2] = true
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            local args = {
+                [1] = "Apply_Meditation",
+                [2] = 1,
+                [3] = true
+            }
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            wait(0.1)
+        end
+    end,
+    Enabled = false
+})
+
+    Y.TextField({
+	Text = "Enter Quest NPC Name",
+	Callback = function(Value)
+		getgenv().questname = Value
+	end,
+})
+
+Y.Toggle({
+    Text = "Auto Quest",
+    Callback = function(Value)
+        a0 = Value
+        while a0 do task.wait()
+            local args = {
+                [1] = questname,
+                [2] = "Add"
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Quest_Remote:FireServer(unpack(args))
+        end
+    end,
+    Enabled = false
+})
+
+local ii = Y.Dropdown({
+    Text = "Select Mob",
+    Callback = function(Value)
+        getgenv().mobname = Value
+end,
+    Options = NPCS
+})
+
+local function getNPC()
+    local dist, thing = math.huge
+    for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
+        if v.Name == mobname and v:IsA("Model") and v:FindFirstChild("HumanoidRootPart")  then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+Y.Button(
+    {
+        Text = "Refresh Mobs",
+        Callback = function()
+            table.clear(NPCS)
+            for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
+                if v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Configuration") then
+                        if not table.find(NPCS, tostring(v)) then
+                        table.insert(NPCS, tostring(v))
+                        ii:SetOptions(NPCS)
+                    end
+                end
+            end
+        end
+    }
+)
+Y.Dropdown({
+    Text = "Select Weapon",
+    Callback = function(Value)
+        getgenv().weapon = Value
+end,
+    Options = {
+        "Sword",
+        "Fist"
+    }
+})
+Y.Toggle({
+    Text = "Auto Attack",
+    Callback = function(Value)
+        a1 = Value
+        while a1 do task.wait()
+            local args = {
+                [1] = "Swing",
+                [2] = 1,
+                [3] = weapon
+            }
+            
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+        end
+    end,
+    Enabled = false
+})
+Y.Toggle({
+    Text = "Auto Mob",
+    Callback = function(Value)
+        a2 = Value
+        while a2 do task.wait()
+            pcall(function()
+            lp.Character.HumanoidRootPart.CFrame =
+            CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, -8, 0), getNPC().HumanoidRootPart.Position)
+            end)
+        end
+    end,
+    Enabled = false
+})
+Y.Button(
+    {
+        Text = "Refresh Mobs",
+        Callback = function()
+            table.clear(NPCS)
+            for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
+                if v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Configuration") then
+                        if not table.find(NPCS, tostring(v)) then
+                        table.insert(NPCS, tostring(v))
+                        ii:SetOptions(NPCS)
+                    end
+                end
+            end
+        end
+    }
+)
+
+
+local function getFOOD()
+    local dist, thing = math.huge
+    for i, v in pairs(game:GetService("Workspace").World.Visuals:GetChildren()) do
+        if v:FindFirstChild("Eat_Part")  then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+
+Y.Toggle({
+    Text = "Auto Eat",
+    Callback = function(Value)
+        a3 = Value
+        while a3 do task.wait()
+            local args = {
+                [1] = "Eat_Body_Part",
+                [2] = getFOOD()
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+        end
+    end,
+    Enabled = false
+})
+M.Dropdown({
+    Text = "Select NPC",
+    Callback = function(Value)
+        getgenv().npcname = Value
+end,
+    Options = NPC
+})
+
+M.Button({
+    Text = "Teleport to NPC",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").World.Interactables[npcname].HumanoidRootPart.CFrame
+    end,
+})
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+
