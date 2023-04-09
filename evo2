@@ -91,39 +91,14 @@ end,
 
 M.Button(
     {
-        Text = "Meditation Progression",
+        Text = "Unlock Progression Viewer Gamepass",
         Callback = function()
-            Notification:Notify(
-   {Title = "Meditation Level", Description = "Your Meditation Level is".." ".. game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].MeditationProgression.Level.Value.." "..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].MeditationProgression.Exp.Value.."/"..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].MeditationProgression.MaxExp.Value},
-   {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
-   {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
-)
-        end
-    }
-)
-
-M.Button(
-    {
-        Text = "Hollow Progression",
-        Callback = function()
-            Notification:Notify(
-   {Title = "Hollow Evolution", Description = "Your Hollow Evolution is".." ".. game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].HollowProgression.Evolution.Value.." "..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].HollowProgression.Exp.Value.."/"..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].HollowProgression.MaxExp.Value},
-   {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
-   {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
-)
-        end
-    }
-)
-
-M.Button(
-    {
-        Text = "Zanpakuto Progression",
-        Callback = function()
-            Notification:Notify(
-   {Title = "Zanpakuto Level", Description = "Your Zanpakuto Level is".." ".. game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].ZanpakutoProgression.Level.Value.." "..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].ZanpakutoProgression.Exp.Value.."/"..game:GetService("ReplicatedStorage")["Player_Datas"][game.Players.LocalPlayer.Name][slot].ZanpakutoProgression.MaxExp.Value},
-   {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 5, Type = "option"},
-   {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
-)
+            local RaceProgression = Instance.new("StringValue", game.Players.LocalPlayer.Gamepasses)
+            RaceProgression.Name = "48232208";
+            RaceProgression.Value = "48232208";
+        local RaceProgression2 = Instance.new("StringValue", game.Players.LocalPlayer.Gamepasses)
+            RaceProgression2.Name = "48232208";
+            RaceProgression2.Value = "48232208";
         end
     }
 )
@@ -250,6 +225,9 @@ Y.Toggle({
     end,
     Enabled = false
 })
+
+
+
 Y.Button(
     {
         Text = "Refresh Mobs",
