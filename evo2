@@ -220,7 +220,7 @@ Y.Toggle({
         while a2 do task.wait()
             pcall(function()
             lp.Character.HumanoidRootPart.CFrame =
-            CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, -8, 0), getNPC().HumanoidRootPart.Position)
+            CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, 8, 0), getNPC().HumanoidRootPart.Position)
             end)
         end
     end,
