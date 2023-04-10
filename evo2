@@ -82,35 +82,24 @@ Cred.Button(
 )
 
 
-local function getLOOT()
-    local dist, thing = math.huge
-    for i, v in pairs(game:GetService("Workspace").World.Drops:GetDescendants()) do
-        if v:IsA("MeshPart") then
-            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
-            if mag < dist then
-                dist = mag
-                thing = v
-            end
-        end
-    end
-    return thing
-end
-
-
-
 Y.Toggle({
     Text = "Auto Loot",
     Callback = function(Value)
         b = Value
         while b do task.wait()
-            pcall(function()
+            pcall(
+                function()
+            for i, v in next,game:GetService("Workspace").World.Drops:GetDescendants() do
+                if v:IsA("MeshPart") then
             local args = {
                 [1] = "Pickup_Item",
-                [2] = getLOOT().Parent
+                [2] = v.Parent
             }
             
             game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
-        end)
+        end
+    end
+end)
         end
     end,
     Enabled = false
