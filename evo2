@@ -1,3 +1,8 @@
+
+
+
+
+
 local NPCS = {}
 
 for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
@@ -75,6 +80,41 @@ Cred.Button(
         end
     }
 )
+
+
+local function getLOOT()
+    local dist, thing = math.huge
+    for i, v in pairs(game:GetService("Workspace").World.Drops:GetDescendants()) do
+        if v:IsA("MeshPart") then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+
+
+
+Y.Toggle({
+    Text = "Auto Loot",
+    Callback = function(Value)
+        b = Value
+        while b do task.wait()
+            pcall(function()
+            local args = {
+                [1] = "Pickup_Item",
+                [2] = getLOOT().Parent
+            }
+            
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+        end)
+        end
+    end,
+    Enabled = false
+})
 
 M.Dropdown({
     Text = "Select Slot",
