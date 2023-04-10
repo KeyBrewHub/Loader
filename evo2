@@ -267,16 +267,16 @@ Y.Toggle({
             if d == "Above" then
                 repeat task.wait()
             lp.Character.HumanoidRootPart.CFrame =
-            CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, 5, 0), getNPC().HumanoidRootPart.Position)
+            CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, 8, 0), getNPC().HumanoidRootPart.Position)
                 until getNPC().Humanoid.Health == 0 or a2 == false
             elseif d == "Below" then
                 repeat task.wait()
                 lp.Character.HumanoidRootPart.CFrame =
-                CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, -5, 0), getNPC().HumanoidRootPart.Position)
+                CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, -8, 0), getNPC().HumanoidRootPart.Position)
             until getNPC().Humanoid.Health == 0 or a2 == false
             elseif d == "Behind" then
                 repeat task.wait()
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getNPC().HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getNPC().HumanoidRootPart.CFrame * CFrame.new(0,0,8)
             until getNPC().Humanoid.Health == 0 or a2 == false
                 end
             end)
@@ -327,9 +327,6 @@ Y.Toggle({
     end,
     Enabled = false
 })
-
-
-
 
 
 M.Dropdown({
