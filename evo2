@@ -100,6 +100,7 @@ Y.Toggle({
             }
             
             game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            task.wait(0.1)
         end
     end
 end)
