@@ -323,6 +323,7 @@ Y.Toggle({
         a3 = Value
         while a3 do task.wait()
                 game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.E,false,game)
+                task.wait(0.5)
         end
     end,
     Enabled = false
