@@ -303,19 +303,6 @@ Y.Toggle({
     Enabled = false
 })
 
-Y.Toggle({
-    Text = "Auto Tp to Body Parts",
-    Callback = function(Value)
-        a4 = Value
-        while a4 do task.wait()
-            pcall(function()
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getFOOD().CFrame + Vector3.new(0,-12,0)
-        end)
-        end
-    end,
-    Enabled = false
-})
-
 M.Dropdown({
     Text = "Select NPC",
     Callback = function(Value)
