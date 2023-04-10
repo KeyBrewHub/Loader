@@ -244,6 +244,8 @@ Y.Toggle({
             task.wait(0.1)
             game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer("Swing",4,weapon)
             task.wait(0.1)
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer("Swing",5,weapon)
+            task.wait(0.1)
         end
     end,
     Enabled = false
