@@ -213,21 +213,45 @@ Y.Toggle({
     end,
     Enabled = false
 })
+
+Y.Dropdown({
+    Text = "Select Direction",
+    Callback = function(Value)
+        getgenv().d = Value
+end,
+    Options = {
+        "Above",
+        "Below",
+        "Behind"
+    }
+})
+
 Y.Toggle({
     Text = "Auto Mob",
     Callback = function(Value)
         a2 = Value
         while a2 do task.wait()
             pcall(function()
+            if d == "Above" then
+                repeat task.wait()
             lp.Character.HumanoidRootPart.CFrame =
             CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, 8, 0), getNPC().HumanoidRootPart.Position)
+                until getNPC().Humanoid.Health == 0 or a2 == false
+            elseif d == "Below" then
+                repeat task.wait()
+                lp.Character.HumanoidRootPart.CFrame =
+                CFrame.new(getNPC().HumanoidRootPart.Position + Vector3.new(0, -8, 0), getNPC().HumanoidRootPart.Position)
+            until getNPC().Humanoid.Health == 0 or a2 == false
+            elseif d == "Behind" then
+                repeat task.wait()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getNPC().HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+            until getNPC().Humanoid.Health == 0 or a2 == false
+                end
             end)
         end
     end,
     Enabled = false
 })
-
-
 
 Y.Button(
     {
@@ -278,6 +302,20 @@ Y.Toggle({
     end,
     Enabled = false
 })
+
+Y.Toggle({
+    Text = "Auto Tp to Body Parts",
+    Callback = function(Value)
+        a4 = Value
+        while a4 do task.wait()
+            pcall(function()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getFOOD().CFrame + Vector3.new(0,-12,0)
+        end)
+        end
+    end,
+    Enabled = false
+})
+
 M.Dropdown({
     Text = "Select NPC",
     Callback = function(Value)
