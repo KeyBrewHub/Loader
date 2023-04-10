@@ -325,9 +325,7 @@ Y.Toggle({
     Callback = function(Value)
         a3 = Value
         while a3 do task.wait()
-            pcall(function()
                 game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.E,false,game)
-        end)
         end
     end,
     Enabled = false
