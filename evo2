@@ -96,7 +96,7 @@ Y.Toggle({
             pcall(
                 function()
             for i, v in next,game:GetService("Workspace").World.Drops:GetDescendants() do
-                if v:IsA("MeshPart") then
+                if v:IsA("MeshPart") or v:IsA("Model") or v:IsA("Part") then
             local args = {
                 [1] = "Pickup_Item",
                 [2] = v.Parent
