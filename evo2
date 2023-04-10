@@ -65,6 +65,12 @@ local M =
         Title = "Misc"
     }
 )
+local S =
+    X.New(
+    {
+        Title = "Auto Skills"
+    }
+)
 local Cred =
     X.New(
     {
@@ -347,11 +353,118 @@ M.Button({
     end,
 })
 
-local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-   wait(1)
-   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
+S.TextField({
+	Text = "Enter Skill Name",
+	Callback = function(Value)
+		getgenv().skillname = Value
+	end,
+})
 
+S.Toggle({
+    Text = "Auto Skill",
+    Callback = function(Value)
+        b5 = Value
+        while b5 do task.wait()
+            local args = {
+                [1] = skillname
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            task.wait(1)
+        end
+    end,
+    Enabled = false
+})
+
+S.TextField({
+	Text = "Enter Skill Name",
+	Callback = function(Value)
+		getgenv().skillname1 = Value
+	end,
+})
+
+S.Toggle({
+    Text = "Auto Skill",
+    Callback = function(Value)
+        b1 = Value
+        while b1 do task.wait()
+            local args = {
+                [1] = skillname1
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            task.wait(1)
+        end
+    end,
+    Enabled = false
+})
+
+S.TextField({
+	Text = "Enter Skill Name",
+	Callback = function(Value)
+		getgenv().skillname2 = Value
+	end,
+})
+
+S.Toggle({
+    Text = "Auto Skill",
+    Callback = function(Value)
+        b2 = Value
+        while b2 do task.wait()
+            local args = {
+                [1] = skillname2
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            task.wait(1)
+        end
+    end,
+    Enabled = false
+})
+
+S.TextField({
+	Text = "Enter Skill Name",
+	Callback = function(Value)
+		getgenv().skillname3 = Value
+	end,
+})
+
+S.Toggle({
+    Text = "Auto Skill",
+    Callback = function(Value)
+        b3 = Value
+        while b3 do task.wait()
+            local args = {
+                [1] = skillname3
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            task.wait(1)
+        end
+    end,
+    Enabled = false
+})
+
+S.TextField({
+	Text = "Enter Skill Name",
+	Callback = function(Value)
+		getgenv().skillname4 = Value
+	end,
+})
+
+S.Toggle({
+    Text = "Auto Skill",
+    Callback = function(Value)
+        b4 = Value
+        while b4 do task.wait()
+            local args = {
+                [1] = skillname4
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+            task.wait(1)
+        end
+    end,
+    Enabled = false
+})
 
