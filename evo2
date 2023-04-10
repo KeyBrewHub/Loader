@@ -241,8 +241,6 @@ Y.Toggle({
             task.wait(0.1)
             game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer("Swing",4,weapon)
             task.wait(0.1)
-            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer("Swing",5,weapon)
-            task.wait(0.1)
         end
     end,
     Enabled = false
@@ -319,7 +317,6 @@ local function getFOOD()
     return thing
 end
 
-
 Y.Toggle({
     Text = "Auto Eat (Nearby)",
     Callback = function(Value)
@@ -330,6 +327,7 @@ Y.Toggle({
     end,
     Enabled = false
 })
+
 
 
 
