@@ -370,6 +370,22 @@ M.Button({
     end,
 })
 
+M.Toggle({
+    Text = "Auto Arrancar Minigame",
+    Callback = function(Value)
+        c = Value
+        while c do task.wait()
+            local args = {
+                [1] = "Change_Arrancar",
+                [2] = "Add"
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Server.Initiate_Server:FireServer(unpack(args))
+        end
+    end,
+    Enabled = false
+})
+
 S.TextField({
 	Text = "Enter Skill Name",
 	Callback = function(Value)
@@ -485,6 +501,11 @@ S.Toggle({
     Enabled = false
 })
 
+
+
+
 for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
     v:Disable()
     end
+
+    
