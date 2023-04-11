@@ -362,6 +362,34 @@ M.Toggle({
     Enabled = false
 })
 
+
+M.Dropdown({
+    Text = "Select Place",
+    Callback = function(Value)
+        getgenv().place = Value
+end,
+    Options = {"Main Menu",
+    "Hueco Mundo",
+    "Karakura Town",
+    "Soul Society",}
+})
+
+M.Button({
+    Text = "Teleport to Place",
+    Callback = function()
+        if place == "Main Menu" then
+        game:GetService("TeleportService"):Teleport(9447079542, game.Players.LocalPlayer)
+        elseif place == "Karakura Town" then
+            game:GetService("TeleportService"):Teleport(9474703390, game.Players.LocalPlayer)
+        elseif place == "Hueco Mundo" then
+            game:GetService("TeleportService"):Teleport(10202329527, game.Players.LocalPlayer)
+        elseif place == "Soul Society" then
+            game:GetService("TeleportService"):Teleport(11420877323, game.Players.LocalPlayer)
+        end
+        
+    end,
+})
+
 M.TextField({
 	Text = "Enter Accessory Name",
 	Callback = function(Value)
