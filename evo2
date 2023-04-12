@@ -390,27 +390,6 @@ M.Button({
     end,
 })
 
-M.TextField({
-	Text = "Enter Accessory Name",
-	Callback = function(Value)
-		getgenv().aname = Value
-	end,
-})
-
-M.Button({
-    Text = "Buff Accessory",
-    Callback = function()
-        for v = 1, 1000 do 
-            local args = {
-                [1] = aname, 
-                [2] = true
-            }
-            
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Server"):WaitForChild("Initiate_Server"):FireServer(unpack(args))
-         end
-    end,
-})
-
 S.TextField({
 	Text = "Enter Skill Name",
 	Callback = function(Value)
