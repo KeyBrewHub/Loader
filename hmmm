@@ -1,0 +1,442 @@
+for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
+    if v:IsA("BillboardGui") and v.Name == "Name" then
+        v.Name = "Boss"
+    end
+end
+local ZONE = {}
+
+for i, v in pairs(game:GetService("ReplicatedStorage").MusicZone:GetChildren()) do
+    if v.Parent.Name == "MusicZone" then
+            if not table.find(ZONE, tostring(v)) then
+            table.insert(ZONE, tostring(v))
+        end
+    end
+end
+local NPC = {}
+
+for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
+    if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel") then
+            if not table.find(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text)) then
+            table.insert(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text))
+        end
+    end
+end
+
+local Shrine = {}
+
+for i, v in pairs(game:GetService("Workspace").Shrines:GetChildren()) do
+    if v:IsA("Model") then
+            if not table.find(Shrine, tostring(v)) then
+            table.insert(Shrine, tostring(v))
+        end
+    end
+end
+
+
+local TweenService  = game:GetService("TweenService")
+local noclipE       = false
+local antifall      = false
+
+local function noclip()
+    for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("BasePart") and v.CanCollide == true then
+            v.CanCollide = false
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+        end
+    end
+end
+
+local function moveto(obj, speed)
+    local info = TweenInfo.new(((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - obj.Position).Magnitude)/ speed,Enum.EasingStyle.Linear)
+    local tween = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, info, {CFrame = obj})
+
+    if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+        antifall = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.HumanoidRootPart)
+        antifall.Velocity = Vector3.new(0,0,0)
+        noclipE = game:GetService("RunService").Stepped:Connect(noclip)
+        tween:Play()
+    end
+        
+    tween.Completed:Connect(function()
+        antifall:Destroy()
+        noclipE:Disconnect()
+    end)
+end
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local X =
+    Material.Load(
+    {
+        Title = "VoxlBlade",
+        Style = 2,
+        SizeX = 300,
+        SizeY = 350,
+        Theme = "Light",
+        ColorOverrides = {
+            MainFrame = Color3.fromRGB(0, 0, 0),
+            Toggle = Color3.fromRGB(124, 37, 255),
+            ToggleAccent = Color3.fromRGB(255, 255, 255),
+            Dropdown = Color3.fromRGB(124, 37, 255),
+            DropdownAccent = Color3.fromRGB(255, 255, 255),
+            Slider = Color3.fromRGB(124, 37, 255),
+            SliderAccent = Color3.fromRGB(255, 255, 255),
+            NavBarAccent = Color3.fromRGB(0, 0, 0),
+            Content = Color3.fromRGB(0, 0, 0)
+        }
+    }
+)
+
+local Y =
+    X.New(
+    {
+        Title = "Main"
+    }
+)
+local M =
+    X.New(
+    {
+        Title = "Misc"
+    }
+)
+local Cred =
+    X.New(
+    {
+        Title = "Credits"
+    }
+)
+Cred.Button(
+    {
+        Text = "Copy Discord",
+        Callback = function()
+            setclipboard("https://discord.gg/s3hYDPjuE3")
+            toclipboard("https://discord.gg/s3hYDPjuE3")
+        end
+    }
+)
+
+
+
+
+
+
+local ii = Y.Dropdown({
+    Text = "Select Mob",
+    Callback = function(Value)
+        getgenv().mobname = Value
+end,
+    Options = NPC
+})
+
+
+
+local function getNPC()
+    local dist, thing = math.huge
+    for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
+        if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel")  and v.LinkedModel.Head.Boss.TextLabel.Text == mobname then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+
+local function getTOAD()
+    local dist, thing = math.huge
+    for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
+        if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel")  and v.LinkedModel.Head.Boss.TextLabel.Text == "Toadzerker" or v.LinkedModel.Head.Boss.TextLabel.Text == "Bulfrogg" then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+
+local function getnearNPC()
+    local dist, thing = math.huge
+    for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
+        if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel")   then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+
+
+Y.Button(
+    {
+        Text = "Refresh Mobs",
+        Callback = function()
+            table.clear(NPC)
+            for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
+                if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel") then
+                        if not table.find(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text)) then
+                        table.insert(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text))
+                        ii:SetOptions(NPC)
+                    end
+                end
+            end
+        end
+    }
+)
+Y.Slider({
+	Text = "Mob Range",
+	Callback = function(Value)
+		getgenv().range = Value
+	end,
+	Min = 1,
+	Max = 20,
+	Def = 1
+})
+
+Y.Toggle({
+    Text = "Auto Mob",
+    Callback = function(Value)
+        b = Value
+        while b do task.wait()
+                    pcall(function()
+                        moveto(getNPC().CFrame * CFrame.new(0,0,(range)),50)
+                        local args = {
+                            [1] = "L"
+                        }
+
+                        game:GetService("ReplicatedStorage").Events.SwingSword:FireServer(unpack(args))
+                        game:GetService("ReplicatedStorage").Events.WeaponArt:FireServer()
+                        game:GetService("ReplicatedStorage").Events.Rune:FireServer()
+            end)
+        end
+	end,
+    Enabled = false
+})
+
+
+
+Y.Toggle({
+    Text = "Mob Aura",
+    Callback = function(Value)
+        h = Value
+        while h do task.wait()
+                    pcall(function()
+                        moveto(getnearNPC().CFrame * CFrame.new(0,0,(range)),50)
+                        local args = {
+                            [1] = "L"
+                        }
+
+                        game:GetService("ReplicatedStorage").Events.SwingSword:FireServer(unpack(args))
+                        game:GetService("ReplicatedStorage").Events.WeaponArt:FireServer()
+                        game:GetService("ReplicatedStorage").Events.Rune:FireServer()
+
+
+            end)
+        end
+	end,
+    Enabled = false
+})
+
+
+Y.Toggle({
+    Text = "Auto Equip Weapon When Dead",
+    Callback = function(Value)
+        c = Value
+        while c do task.wait()
+
+if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
+    task.wait(3)
+    game:GetService("ReplicatedStorage").Events.EquipWeapon:InvokeServer()
+end
+        end
+	end,
+    Enabled = false
+})
+M.Button(
+    {
+        Text = "To Snailsman",
+        Callback = function()
+            moveto(game:GetService("Workspace").Map.Stand.Snailsman.CFrame + Vector3.new(0,0,0),50)
+        end,
+        Menu = {
+            Information = function(self)
+                X.Banner({
+                    Text = "Only works if Snailsman is spawned"
+                })
+            end
+        }
+    }
+)
+M.Toggle({
+    Text = "Increase WalkSpeed",
+    Callback = function(Value)
+        b1 = Value
+        while b1 do task.wait()
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+        end
+	end,
+    Enabled = false
+})
+
+M.Dropdown({
+    Text = "Select Zone",
+    Callback = function(Value)
+        getgenv().zonename = Value
+end,
+    Options = ZONE
+})
+
+M.Button(
+    {
+        Text = "To Zone",
+        Callback = function()
+            moveto(game:GetService("ReplicatedStorage").MusicZone[zonename].CFrame + Vector3.new(0,0,0),50)
+        end
+    }
+)
+
+    M.Dropdown({
+    Text = "Select Shrine",
+    Callback = function(Value)
+        getgenv().shrinename = Value
+end,
+    Options = Shrine
+})
+
+M.Button(
+    {
+        Text = "To Shrine",
+        Callback = function()
+            moveto(game:GetService("Workspace").Shrines[shrinename][shrinename].CFrame + Vector3.new(0,0,0),50)
+        end
+    }
+)
+
+M.Dropdown({
+    Text = "Select Infuser",
+    Callback = function(Value)
+        getgenv().inname = Value
+end,
+    Options = {
+        "Helmet",
+        "Pants",
+        "Shirt"
+    }
+})
+
+M.Button(
+    {
+        Text = "To Infuser",
+        Callback = function()
+            moveto(game:GetService("Workspace").Infusers[inname].Union.CFrame + Vector3.new(0,0,0),50)
+        end
+    }
+)
+
+M.Dropdown({
+    Text = "Select Guild",
+    Callback = function(Value)
+        getgenv().guildname = Value
+end,
+    Options = {"Mage","Hex","Knight","Monk","Thief","Gladiator","Cleric"}
+
+})
+
+M.Button(
+    {
+        Text = "To Guild",
+        Callback = function()
+            if guildname == "Mage" then
+            moveto(game:GetService("Workspace").Interactables.Lapis.CFrame + Vector3.new(0,0,0),50)
+
+            elseif guildname == "Hex" then
+                moveto(game:GetService("Workspace").Interactables.DeadISlayer.CFrame + Vector3.new(0,0,0),50)
+
+            elseif guildname == "Knight" then
+                moveto(game:GetService("Workspace").Interactables.Talon.CFrame + Vector3.new(0,0,0),50)
+
+            elseif guildname == "Monk" then
+                moveto(game:GetService("Workspace").Interactables.Gong.CFrame + Vector3.new(0,0,0),50)
+
+            elseif guildname == "Thief" then
+                moveto(game:GetService("Workspace").Interactables.Robert.CFrame + Vector3.new(0,0,0),50)
+
+            elseif guildname == "Gladiator" then
+                moveto(game:GetService("Workspace").Interactables.Pickles.CFrame + Vector3.new(0,0,0),50)
+
+            elseif guildname == "Cleric" then
+                moveto(game:GetService("Workspace").Interactables.Topez.CFrame + Vector3.new(0,0,0),50)
+
+            end
+        end
+    }
+)
+
+M.Dropdown({
+    Text = "Select Dungeon",
+    Callback = function(Value)
+        getgenv().dungeonename = Value
+end,
+    Options = {"Frogg Dungeon","Bee Dungeon"}
+})
+
+M.Button(
+    {
+        Text = "To Dungeon",
+        Callback = function()
+            if dungeonename == "Frogg Dungeon" then
+            moveto(game:GetService("Workspace").Others.FroggDungeon.CFrame + Vector3.new(0,0,0),50)
+            elseif dungeonename == "Bee Dungeon" then
+                moveto(game:GetService("Workspace").Others.BeeDungeon.CFrame + Vector3.new(0,0,0),50)
+            end
+        end
+    }
+)
+
+M.Dropdown({
+    Text = "Select Voidrift",
+    Callback = function(Value)
+        getgenv().dungeonename = Value
+end,
+    Options = {"flower rift","vinelands rift","ice rift"}
+})
+
+M.Button(
+    {
+        Text = "To Voidrift",
+        Callback = function()
+            if dungeonename == "vinelands rift" then
+                for i, v in pairs(game:GetService("Workspace").Interactables:GetDescendants()) do
+                    if v.Name == "VoidRift2" then
+            moveto(v.CFrame + Vector3.new(0,0,0),50)
+        end
+    end
+            elseif dungeonename == "ice rift" then
+                for i, v in pairs(game:GetService("Workspace").Interactables:GetDescendants()) do
+                    if v.Name == "VoidRift3" then
+            moveto(v.CFrame + Vector3.new(0,0,0),50)
+        end
+end
+            elseif dungeonename == "flower rift" then
+                moveto(game:GetService("Workspace").Interactables.VoidRift.VoidRift1.CFrame + Vector3.new(0,0,0),50)
+
+            end
+        end
+    }
+)
+
+
+aaaa = true
+while aaaa == true do task.wait()
+    for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
+    if v:IsA("BillboardGui") and v.Name == "Name" then
+        v.Name = "Boss"
+        
+    end
+    end
+    end
