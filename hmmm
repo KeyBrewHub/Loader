@@ -436,7 +436,7 @@ while aaaa == true do task.wait()
     for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
     if v:IsA("BillboardGui") and v.Name == "Name" then
         v.Name = "Boss"
-        
+        task.wait(.5)
     end
     end
     end
