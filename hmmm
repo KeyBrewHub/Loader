@@ -331,7 +331,7 @@ Y.Toggle({
         while bbb do task.wait()
             game:GetService("ReplicatedStorage").Events.WeaponArt:FireServer()
             game:GetService("ReplicatedStorage").Events.Rune:FireServer()
-            task.wait(2)
+            task.wait(0.5)
         end
 	end,
     Enabled = false
