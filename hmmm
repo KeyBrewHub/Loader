@@ -290,20 +290,11 @@ Y.Toggle({
         while b do task.wait()
                     pcall(function()
                         moveto(getNPC().Parent.Parent.HumanoidRootPart.CFrame * CFrame.new(0,0,(range)),50)
-                        local args = {
-                            [1] = "L"
-                        }
-
-                        game:GetService("ReplicatedStorage").Events.SwingSword:FireServer(unpack(args))
-                        game:GetService("ReplicatedStorage").Events.WeaponArt:FireServer()
-                        game:GetService("ReplicatedStorage").Events.Rune:FireServer()
             end)
         end
 	end,
     Enabled = false
 })
-
-
 
 Y.Toggle({
     Text = "Mob Aura",
@@ -312,20 +303,41 @@ Y.Toggle({
         while h do task.wait()
                     pcall(function()
                         moveto(getnearNPC().CFrame * CFrame.new(0,0,(range)),50)
-                        local args = {
-                            [1] = "L"
-                        }
-
-                        game:GetService("ReplicatedStorage").Events.SwingSword:FireServer(unpack(args))
-                        game:GetService("ReplicatedStorage").Events.WeaponArt:FireServer()
-                        game:GetService("ReplicatedStorage").Events.Rune:FireServer()
-
-
             end)
         end
 	end,
     Enabled = false
 })
+
+Y.Toggle({
+    Text = "Auto Attack",
+    Callback = function(Value)
+        bbbb = Value
+        while bbbb do task.wait()
+            local args = {
+                [1] = "L"
+            }
+            game:GetService("ReplicatedStorage").Events.SwingSword:FireServer(unpack(args))
+            task.wait(0.1)
+        end
+	end,
+    Enabled = false
+})
+
+Y.Toggle({
+    Text = "Auto Skills",
+    Callback = function(Value)
+        bbbb = Value
+        while bbbb do task.wait()
+            game:GetService("ReplicatedStorage").Events.WeaponArt:FireServer()
+            game:GetService("ReplicatedStorage").Events.Rune:FireServer()
+            task.wait(2)
+        end
+	end,
+    Enabled = false
+})
+
+
 
 
 Y.Toggle({
