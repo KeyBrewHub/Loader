@@ -22,6 +22,8 @@ local function espDraw(model)
     text.Size = espSize
     text.Font = espFont
 
+
+
     
     local render = runSer.RenderStepped:connect(function()
         local s, e = pcall(function()
@@ -86,11 +88,10 @@ local function espDraw(model)
     end)
 end
 
-for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
-    if v:IsA("BillboardGui") and v.Name == "Name" then
-        v.Name = "Boss"
-    end
-end
+    
+
+    
+
 local ZONE = {}
 
 for i, v in pairs(game:GetService("ReplicatedStorage").MusicZone:GetChildren()) do
@@ -102,10 +103,10 @@ for i, v in pairs(game:GetService("ReplicatedStorage").MusicZone:GetChildren()) 
 end
 local NPC = {}
 
-for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
-    if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel") then
-            if not table.find(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text)) then
-            table.insert(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text))
+for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
+    if v:IsA("BillboardGui") and v.Name == "Name" then
+            if not table.find(NPC, tostring(v.TextLabel.Text)) then
+            table.insert(NPC, tostring(v.TextLabel.Text))
         end
     end
 end
@@ -227,9 +228,9 @@ end,
 
 local function getNPC()
     local dist, thing = math.huge
-    for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
-        if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel")  and v.LinkedModel.Head.Boss.TextLabel.Text == mobname then
-            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+    for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
+        if v:IsA("BillboardGui") and v.Name == "Name" and v.TextLabel.Text == mobname then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Parent.Parent.HumanoidRootPart.Position).magnitude
             if mag < dist then
                 dist = mag
                 thing = v
@@ -239,19 +240,7 @@ local function getNPC()
     return thing
 end
 
-local function getTOAD()
-    local dist, thing = math.huge
-    for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
-        if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel")  and v.LinkedModel.Head.Boss.TextLabel.Text == "Toadzerker" or v.LinkedModel.Head.Boss.TextLabel.Text == "Bulfrogg" then
-            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
-            if mag < dist then
-                dist = mag
-                thing = v
-            end
-        end
-    end
-    return thing
-end
+
 
 local function getnearNPC()
     local dist, thing = math.huge
@@ -273,10 +262,10 @@ Y.Button(
         Text = "Refresh Mobs",
         Callback = function()
             table.clear(NPC)
-            for i, v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
-                if v:IsA("MeshPart") and v:FindFirstChild("LinkedModel") then
-                        if not table.find(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text)) then
-                        table.insert(NPC, tostring(v.LinkedModel.Head.Boss.TextLabel.Text))
+            for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
+                if v:IsA("BillboardGui") and v.Name == "Name" then
+                        if not table.find(NPC, tostring(v.TextLabel.Text)) then
+                        table.insert(NPC, tostring(v.TextLabel.Text))
                         ii:SetOptions(NPC)
                     end
                 end
@@ -300,7 +289,7 @@ Y.Toggle({
         b = Value
         while b do task.wait()
                     pcall(function()
-                        moveto(getNPC().CFrame * CFrame.new(0,0,(range)),50)
+                        moveto(getNPC().Parent.Parent.HumanoidRootPart.CFrame * CFrame.new(0,0,(range)),50)
                         local args = {
                             [1] = "L"
                         }
@@ -590,12 +579,4 @@ workspace.NPCS.ChildAdded:Connect(function(v)
     espDraw(v)
 end)
 
-aaaa = true
-while aaaa == true do task.wait()
-    for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
-    if v:IsA("BillboardGui") and v.Name == "Name" then
-        v.Name = "Boss"
-        task.wait(.5)
-    end
-    end
-    end
+
