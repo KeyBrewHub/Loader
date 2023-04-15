@@ -283,13 +283,24 @@ Y.Slider({
 	Def = 1
 })
 
+Y.Slider({
+	Text = "Mob Height",
+	Callback = function(Value)
+		getgenv().height = Value
+	end,
+	Min = 0,
+	Max = 30,
+	Def = 0
+})
+
+
 Y.Toggle({
     Text = "Auto Mob",
     Callback = function(Value)
         b = Value
         while b do task.wait()
                     pcall(function()
-                        moveto(getNPC().Parent.Parent.HumanoidRootPart.CFrame * CFrame.new(0,0,(range)),50)
+                        moveto(getNPC().Parent.Parent.HumanoidRootPart.CFrame * CFrame.new(0,(height),(range)),50)
             end)
         end
 	end,
@@ -590,5 +601,4 @@ end
 workspace.NPCS.ChildAdded:Connect(function(v)
     espDraw(v)
 end)
-
 
