@@ -321,7 +321,7 @@ Y.Toggle({
 })
 
 Y.Toggle({
-    Text = "Auto Attack",
+    Text = "Auto M1",
     Callback = function(Value)
         bbbb = Value
         while bbbb do task.wait()
@@ -334,6 +334,22 @@ Y.Toggle({
 	end,
     Enabled = false
 })
+
+Y.Toggle({
+    Text = "Auto M2",
+    Callback = function(Value)
+        m = Value
+        while m do task.wait()
+            local args = {
+                [1] = "R"
+            }
+            game:GetService("ReplicatedStorage").Events.SwingSword:FireServer(unpack(args))
+            task.wait(0.1)
+        end
+	end,
+    Enabled = false
+})
+
 
 Y.Toggle({
     Text = "Auto Skills",
