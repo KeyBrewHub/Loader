@@ -1,14 +1,17 @@
 
 
+
 local NPCS = {}
 
 for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
-    if v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Configuration") then
+    if v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Folder") then
             if not table.find(NPCS, tostring(v)) then
             table.insert(NPCS, tostring(v))
         end
     end
 end
+
+
 local NPC = {}
 
 for i, v in pairs(game:GetService("Workspace").World.Interactables:GetChildren()) do
@@ -159,28 +162,6 @@ Y.Toggle({
     Enabled = false
 })
 
-    Y.TextField({
-	Text = "Enter Quest NPC Name",
-	Callback = function(Value)
-		getgenv().questname = Value
-	end,
-})
-
-Y.Toggle({
-    Text = "Auto Quest",
-    Callback = function(Value)
-        a0 = Value
-        while a0 do task.wait()
-            local args = {
-                [1] = questname,
-                [2] = "Add"
-            }
-
-            game:GetService("ReplicatedStorage").Remotes.Quest_Remote:FireServer(unpack(args))
-        end
-    end,
-    Enabled = false
-})
 
 local ii = Y.Dropdown({
     Text = "Select Mob",
@@ -247,6 +228,7 @@ Y.Toggle({
     Enabled = false
 })
 
+
 Y.Dropdown({
     Text = "Select Direction",
     Callback = function(Value)
@@ -258,7 +240,6 @@ end,
         "Behind"
     }
 })
-
 Y.Toggle({
     Text = "Auto Mob",
     Callback = function(Value)
