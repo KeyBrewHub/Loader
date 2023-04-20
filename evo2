@@ -4,7 +4,7 @@
 local NPCS = {}
 
 for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
-    if v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Folder") then
+    if  v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Folder") or v.Parent:IsA("Configuration") and v:FindFirstChild("HumanoidRootPart") then
             if not table.find(NPCS, tostring(v)) then
             table.insert(NPCS, tostring(v))
         end
@@ -190,7 +190,7 @@ Y.Button(
         Callback = function()
             table.clear(NPCS)
             for i, v in pairs(game:GetService("Workspace").World.Live.Mobs:GetDescendants()) do
-                if v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Folder") then
+                if  v:FindFirstChild("HumanoidRootPart") and v.Parent:IsA("Folder") or v.Parent:IsA("Configuration") and v:FindFirstChild("HumanoidRootPart") then
                         if not table.find(NPCS, tostring(v)) then
                         table.insert(NPCS, tostring(v))
                         ii:SetOptions(NPCS)
